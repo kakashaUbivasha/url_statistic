@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('link_id');
             $table->foreign('link_id')->references('id')->on('links')->onDelete('cascade');
             $table->ipAddress('ip');
-            $table->timestamp('created_at');
             $table->timestamps();
         });
     }
