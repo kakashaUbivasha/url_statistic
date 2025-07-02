@@ -8,8 +8,10 @@ use App\Models\Link;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -40,7 +42,13 @@ class LinkResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('id')->label('ID'),
+                TextColumn::make('original_url')->label('Оригинальный URL'),
+                TextColumn::make('short_code')->label('Короткий код'),
+                TextColumn::make('created_at')->dateTime()->label('Создано'),
+                TextColumn::make('clicks_count')
+                    ->counts('clicks')
+                    ->label('Переходов'),
             ])
             ->filters([
                 //
@@ -61,7 +69,7 @@ class LinkResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ClicksRelationManager::class
         ];
     }
 
@@ -70,14 +78,12 @@ class LinkResource extends Resource
         return [
             'index' => Pages\ListLinks::route('/'),
             'create' => Pages\CreateLink::route('/create'),
-            'edit' => Pages\EditLink::route('/{record}/edit'),
+            'view' => Pages\ViewLink::route('/{record}'),
         ];
     }
-    public static function mutateFormDataBeforeCreate(array $data): array
+    public static function canEdit($record): bool
     {
-        $data['user_id'] = auth()->id();
-        $data['short_code'] = Str::random(6);
-        return $data;
+        return false;
     }
 
 }
