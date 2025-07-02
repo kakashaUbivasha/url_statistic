@@ -13,4 +13,8 @@ class Link extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function clicks()
+    {
+        return $this->hasMany(Click::class);
+    }
 }
