@@ -13,7 +13,7 @@ class CreateLink extends CreateRecord
     public function mutateFormDataBeforeCreate(array $data): array
     {
         $data['user_id'] = auth()->id();
-        $data['short_code'] = Str::random(6);
+        $data['short_code'] = Str::random(4);
         return $data;
     }
 }
