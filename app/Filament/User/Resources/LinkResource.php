@@ -4,6 +4,7 @@ namespace App\Filament\User\Resources;
 
 use App\Filament\User\Resources\LinkResource\Pages;
 use App\Filament\User\Resources\LinkResource\RelationManagers;
+use App\Filament\User\Resources\LinkResource\Widgets\CustomerOverview;
 use App\Models\Link;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
@@ -88,6 +89,12 @@ class LinkResource extends Resource
     public static function canEdit($record): bool
     {
         return false;
+    }
+    public static function getWidgets(): array
+    {
+        return [
+            CustomerOverview::class
+        ];
     }
 
 }
