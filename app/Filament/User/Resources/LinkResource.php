@@ -35,6 +35,10 @@ class LinkResource extends Resource
                     ->label('Оригинальный URL')
                     ->required()
                     ->url(),
+                TextInput::make('short_code')
+                    ->label('Короткий URL')
+                    ->required()
+                    ->url(fn ($record) => url('/' . $record->short_code)),
             ]);
     }
 
@@ -44,7 +48,7 @@ class LinkResource extends Resource
             ->columns([
                 TextColumn::make('id')->label('ID'),
                 TextColumn::make('original_url')->label('Оригинальный URL'),
-                TextColumn::make('short_code')->label('Короткий код'),
+                TextColumn::make('short_code')->label('Короткий код')->url(fn ($record) => url('/' . $record->short_code))->openUrlInNewTab(),
                 TextColumn::make('created_at')->dateTime()->label('Создано'),
                 TextColumn::make('clicks_count')
                     ->counts('clicks')
