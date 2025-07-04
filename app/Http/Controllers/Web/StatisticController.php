@@ -3,17 +3,13 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\Link;
-use Illuminate\Http\Request;
+use App\Services\StatisticService;
 
 class StatisticController extends Controller
 {
-    public function redirect($url)
+    public function redirect($url, StatisticService $service)
     {
-        $short_url = Link::where('short_code', $url)->firstOrFail();
-        $short_url->clicks()->create([
-            'ip' => request()->ip(),
-        ]);
-        return redirect()->away($short_url->original_url);
+        $originalUrl = $service->redirect($url);
+        return redirect()->away($originalUrl);
     }
 }

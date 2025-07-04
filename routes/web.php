@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/user');
 });
 Route::get('/{short_link}', [\App\Http\Controllers\Web\StatisticController::class, 'redirect']);
