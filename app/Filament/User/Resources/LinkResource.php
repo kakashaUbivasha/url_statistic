@@ -36,10 +36,6 @@ class LinkResource extends Resource
                     ->label('Оригинальный URL')
                     ->required()
                     ->url(),
-                TextInput::make('short_code')
-                    ->label('Короткий URL')
-                    ->required()
-                    ->url(fn ($record) => url('/' . $record->short_code)),
             ]);
     }
 
